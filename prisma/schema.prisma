@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  username       String   @unique
+  picture        String?
+  nickname       String?  @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  role           Role?    @default(USER)
+  annotated      Task[]   @relation("User_annotated")
+  rejected       Task[]   @relation("User_rejected")
+  reviewed       Task[]   @relation("User_reviewed")
+  reviewer_user  User?    @relation("ReviewerUser", fields: [reviewerUserId], references: [id])
+  reviewerUserId String?
+  reviewedUsers  User[]   @relation("ReviewerUser")
+  activate       Boolean  @default(false)
+  group          Group?   @relation(fields: [groupId], references: [id])
+  groupId        String?
+
+  @@index([role], name: "RoleIndex")
+}
+
+model Group {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  users     User[]
+  task      Task[]
+}
+
+model Task {
+  id               String   @id @default(uuid())
+  version          String
+  group            Group?   @relation(fields: [groupId], references: [id])
+  groupId          String
+  write_up         String
+  annotated_prompt String?
+  reviewed_prompt  String?
+  annotated_by     User?    @relation("User_annotated", fields: [annotated_by_id], references: [id])
+  rejected_by      User?    @relation("User_rejected", fields: [rejected_by_id], references: [id])
+  reviewed_by      User?    @relation("User_reviewed", fields: [reviewed_by_id], references: [id])
+  createdAt        DateTime @default(now())
+  annotatedAt      DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  status           Status   @default(PENDING)
+  annotated_by_id  String?
+  rejected_by_id   String?
+  reviewed_by_id   String?
+}
+
+enum Status {
+  PENDING
+  ANNOTATED
+  REVIEWED
+}
+
+enum Role {
+  USER
+  REVIEWER
+  ANNOTATOR
+  ADMIN
+}
