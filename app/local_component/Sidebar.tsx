@@ -23,11 +23,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
 
         <div className="grid gap-4 pt-4 pb-1">
           <div className="grid grid-cols-4 items-center gap-4">
-            {/* {isAdmin && (
+            {isAdmin && (
               <Link to={`/admin?session=${user?.username}`} className="mt-3">
                 <Button>Admin</Button>
               </Link>
-            )} */}
+            )}
           </div>
         </div>
         <div className="flex flex-col gap-2 pb-2 ">

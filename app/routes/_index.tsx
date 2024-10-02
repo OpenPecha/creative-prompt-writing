@@ -36,9 +36,9 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (user?.role === "REVIEWER") {
     return redirect(`/reviewer?session=${user.username}`);
   }
-  // if (user?.role === "ADMIN") {
-  //   return redirect(`/admin?session=${user.username}`);
-  // }
+  if (user?.role === "ADMIN") {
+    return redirect(`/admin?session=${user.username}`);
+  }
   if (history && user?.activate) {
     text = await getText(history);
   }
