@@ -21,6 +21,7 @@ function History() {
     }
   }, [isOpen]);
   const sample = fetcher.data;
+  console.log("sample", sample);
   if (sample?.length === 0) return null;
   return (
     <Collapsible
@@ -54,7 +55,7 @@ function History() {
                   onClick={handleHistory}
                   className="flex justify-between"
                 >
-                  <h5>{truncateString(item.original_text, 20)}</h5>
+                  <h5>{truncateString(item.write_up, 20)}</h5>
                   <span>{timeAgo(item.updatedAt)}</span>{" "}
                 </Button>
               );

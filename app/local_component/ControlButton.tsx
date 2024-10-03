@@ -1,6 +1,4 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
-import { FiArrowRight } from "react-icons/fi";
-import { RxCross2 } from "react-icons/rx";
 import { Button } from "~/components/ui";
 
 function ControlButton({ promptText, text, reset, active }: any) {
@@ -19,23 +17,22 @@ function ControlButton({ promptText, text, reset, active }: any) {
   }
 
   return (
-    <div className="fixed bottom-10 w-full">
+    <div className="w-full">
       <div className="flex justify-center gap-6">
         <Button
-          variant="ghost"
-          className="h-[10vh] w-[10vh] text-white text-xl flex flex-col"
+          variant="default"
+          className="text-white text-xl p-6"
           onClick={reset}
           disabled={!active}
         >
-          <RxCross2 size={40} />
           Reset
         </Button>
         <Button
-          className="bg-green-700 hover:bg-green-600 h-[10vh] w-[10vh] text-xl flex flex-col"
+          className="bg-green-700 hover:bg-green-600 text-xl p-6"
           onClick={submit}
           disabled={!active}
         >
-          <FiArrowRight size={40} /> Submit
+          Submit
         </Button>
       </div>
     </div>

@@ -53,6 +53,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
     where: {
       annotated_by_id: user?.id,
       reviewed_prompt: { not: null },
+      status: "REVIEWED",
     },
   });
 

@@ -19,7 +19,7 @@ function UserList({ close }) {
           <div className="grid gap-1">
             <p className="text-sm font-medium leading-none flex gap-2 items-center">
               {user.nickname}
-              <Badge variant="outline">{user._count.modified}</Badge>
+              <Badge variant="outline">{user._count.annotated}</Badge>
             </p>
             <p className="text-sm text-muted-foreground">{user.username}</p>
           </div>

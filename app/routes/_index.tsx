@@ -57,7 +57,7 @@ export default function Index() {
 
   const { text, error } = useLoaderData();
   return (
-    <div className="flex h-screen">
+    <div className="p-3">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
       {!error && (

@@ -87,10 +87,10 @@ export async function removeRejectText(
 export async function saveText({
   id,
   annotatedPrompt,
-  reviewed_text,
+  reviewedPrompt,
   userId,
 }: any) {
-  const isReviewer = reviewed_text ? true : false;
+  const isReviewer = reviewedPrompt ? true : false;
   if (!isReviewer) {
     return await db.task.update({
       where: {
@@ -109,7 +109,7 @@ export async function saveText({
         id,
       },
       data: {
-        reviewed_prompt: reviewed_text,
+        reviewed_prompt: reviewedPrompt,
         status: "REVIEWED",
         reviewed_by_id: userId,
       },

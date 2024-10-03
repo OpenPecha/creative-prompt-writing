@@ -1,7 +1,5 @@
 import { useFetcher, useLoaderData } from "@remix-run/react";
 import { useEffect } from "react";
-import { FiArrowRight } from "react-icons/fi";
-import { RxCross2 } from "react-icons/rx";
 import {
   Button,
   TooltipProvider,
@@ -18,8 +16,7 @@ function ControlButton({ reviewedPrompt, text }) {
     submit_fetcher.submit(
       {
         id: text.id,
-        reviewedPrompt,
-        type: "annotator",
+        reviewedPrompt: reviewedPrompt,
         userId: user.id,
         session,
       },
@@ -31,8 +28,7 @@ function ControlButton({ reviewedPrompt, text }) {
     submit_fetcher.submit(
       {
         id: text.id,
-        reviewedPrompt,
-        type: "annotator",
+        reviewedPrompt: reviewedPrompt,
         userId: user.id,
         session,
       },
@@ -60,7 +56,7 @@ function ControlButton({ reviewedPrompt, text }) {
   }
 
   return (
-    <div className="fixed bottom-5 w-full z-50">
+    <div className="w-full">
       <div className="flex justify-center gap-6">
         <TooltipProvider>
           <Tooltip>
@@ -68,10 +64,9 @@ function ControlButton({ reviewedPrompt, text }) {
               <Button
                 id="reject"
                 variant="destructive"
-                className="text-white text-xl flex gap-4 p-4"
+                className="text-white text-xl p-6"
                 onClick={reject}
               >
-                <RxCross2 size={30} />
                 Reject
               </Button>
             </TooltipTrigger>
@@ -82,10 +77,10 @@ function ControlButton({ reviewedPrompt, text }) {
         </TooltipProvider>
 
         <Button
-          className="bg-green-700 hover:bg-green-600 h-[10vh] w-[10vh] text-xl flex flex-col"
+          className="bg-green-700 hover:bg-green-600 text-xl p-6 "
           onClick={submit}
         >
-          <FiArrowRight size={40} /> Submit
+          Accept
         </Button>
       </div>
     </div>

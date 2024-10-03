@@ -43,3 +43,16 @@ export function timeAgo(timestamp) {
   const yearsAgo = Math.floor(daysAgo / 365);
   return `${yearsAgo} years ago`;
 }
+
+export const splitIntoSyllables = (text) => {
+  // Split the text into syllables using regular expressions
+  const syllables = text.split(/[\\s་།]+/);
+  // Filter out empty syllables
+  const filteredSplit = syllables.filter((s) => s !== "");
+  return filteredSplit;
+};
+
+export const calculatePay = (syllableCount) => {
+  // Calculate pay based on the number of words
+  return syllableCount * 0.5;
+};

@@ -8,21 +8,6 @@ function WorkStation({ text }) {
   const [reviewedPrompt, setReviewedPrompt] = React.useState(
     text?.reviewed_prompt ? text?.reviewed_prompt : text?.annotated_prompt
   );
-  const submit_fetcher = useFetcher();
-  const { user, session } = useLoaderData();
-
-  function submit() {
-    submit_fetcher.submit(
-      {
-        id: text?.id,
-        reviewed_prompt: reviewedPrompt,
-        type: "annotator",
-        userId: user.id,
-        session,
-      },
-      { action: "/api/text", method: "POST" }
-    );
-  }
 
   useEffect(() => {
     // Add event listener for keyboard shortcuts
@@ -44,14 +29,14 @@ function WorkStation({ text }) {
   }
 
   return (
-    <div className="max-w-8xl mx-auto p-10 bg-white rounded-lg shadow-lg">
+    <div className="max-w-8xl mx-auto bg-gray-50 md:p-4 rounded-md shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Creative Write up Section */}
-        <div className="space-y-2 md:h-screen">
-          <h2 className="text-lg font-semibold text-blue-600 border border-blue-400 rounded p-2 inline-block">
+        <div className="space-y-2 md:h-[80vh]">
+          <h2 className="text-lg font-semibold text-white bg-black rounded py-2 px-4 inline-block">
             Creative Write up
           </h2>
-          <div className="border border-blue-400 rounded p-4 overflow-y-auto h-96 md:h-3/4">
+          <div className="border border-gray-600 rounded p-4 overflow-y-auto h-96 md:h-3/4">
             <p className="text-gray-700">
               {/* Placeholder text */}
               {writeUp}
@@ -61,11 +46,11 @@ function WorkStation({ text }) {
 
         {/* Prompt Section */}
         <div className="space-y-2">
-          <h2 className="text-lg font-semibold text-blue-600 border border-blue-400 rounded p-2 inline-block">
+          <h2 className="text-lg font-semibold text-white bg-black rounded py-2 px-4 inline-block">
             Prompt
           </h2>
           <Textarea
-            className="w-full border border-blue-400 rounded-md p-4"
+            className="w-full border border-gray-600 rounded-md p-4"
             value={reviewedPrompt}
             rows={15}
             onChange={(e) => setReviewedPrompt(e.target.value)}

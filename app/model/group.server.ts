@@ -7,18 +7,18 @@ export const getGroupInfo = async (version: string) => {
     },
     select: {
       version: true,
-      modified_text: true,
-      reviewed_text: true,
+      annotated_prompt: true,
+      reviewed_prompt: true,
     },
     orderBy: {
       updatedAt: "desc",
     },
   });
   const reviewed_count =
-    textRecords.filter((item) => item.reviewed_text !== null).length ?? 0;
+    textRecords.filter((item) => item.reviewed_prompt !== null).length ?? 0;
 
   const accepted_count =
-    textRecords.filter((item) => item.modified_text !== null).length ?? 0;
+    textRecords.filter((item) => item.annotated_prompt !== null).length ?? 0;
   return {
     total: textRecords.length,
     reviewed: reviewed_count,

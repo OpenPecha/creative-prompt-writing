@@ -62,7 +62,7 @@ function History({ close }) {
                   onClick={handleHistory}
                   className="flex justify-between"
                 >
-                  <h5>{truncateString(item.original_text, 20)}</h5>
+                  <h5>{truncateString(item.write_up, 20)}</h5>
                   <span>{timeAgo(item.updatedAt)}</span>{" "}
                 </Button>
               );

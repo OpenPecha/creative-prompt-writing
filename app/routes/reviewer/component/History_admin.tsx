@@ -18,26 +18,26 @@ function History_admin({ sidebarOpen, setSidebarOpen }) {
       <SheetContent side={"right"}>
         <SheetHeader>
           <SheetTitle>Pecha Tools</SheetTitle>
-          <SheetDescription>Prompt Editor</SheetDescription>
+          <SheetDescription>Prompt Writing</SheetDescription>
         </SheetHeader>
         <div className="flex flex-col gap-2 pb-2 ">
           <small className="text-sm font-medium leading-none">{text?.id}</small>
           <div className="flex gap-2 items-center">
-            <div className="text-lg font-semibold">User:</div>
+            <div className="text-md font-semibold">Annotator:</div>
             <small className="text-sm font-medium leading-none">
               {user.username}
             </small>
           </div>
 
           <div className="flex gap-2 items-center">
-            <div className="text-lg font-semibold">Submitted :</div>
+            <div className="text-md font-semibold">Submitted :</div>
             <small className="text-sm font-medium leading-none">
               {submitted_count}
             </small>
           </div>
 
           <div className="flex gap-2 items-center">
-            <div className="text-lg font-semibold">Reviewed :</div>
+            <div className="text-md font-semibold">Reviewed :</div>
             <small className="text-sm font-medium leading-none">
               {reviewed_count}
             </small>

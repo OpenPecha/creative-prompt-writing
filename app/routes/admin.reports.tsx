@@ -4,6 +4,18 @@ import { useLoaderData } from "@remix-run/react";
 import UserChart from "./admin/component/UserChart";
 import { db } from "~/services/db.server";
 import { DatePickerWithRange } from "./admin/component/DateRangePicker";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "~/components/ui";
+import { calculatePay } from "~/lib/utility";
+import { getUsersWorkReport } from "~/model/user.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // get the from and to date from the query params
@@ -48,6 +60,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
     },
   });
+
   // Fetch all group ids
   const groupIds = new Set(groupData.map((item) => item.groupId));
 
@@ -114,7 +127,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
       ...(fromDate &&
         toDate && {
-          modifiedAt: {
+          annotatedAt: {
             gte: new Date(fromDate),
             lte: new Date(toDate),
           },
@@ -136,7 +149,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       status: "ANNOTATED",
       ...(fromDate &&
         toDate && {
-          modifiedAt: {
+          annotatedAt: {
             gte: new Date(fromDate),
             lte: new Date(toDate),
           },
@@ -241,6 +254,24 @@ export const loader: LoaderFunction = async ({ request }) => {
     })
   );
 
+  //
+  const appUsers = await db.user.findMany({
+    where: {
+      role: {
+        in: ["ANNOTATOR", "REVIEWER"],
+      },
+    },
+    select: {
+      id: true,
+      username: true,
+      role: true,
+    },
+  });
+
+  const workReport = await Promise.all(
+    appUsers.map(async (user) => getUsersWorkReport(user, fromDate, toDate))
+  );
+
   // Convert the map to an array
   return {
     totalpendingCount,
@@ -250,6 +281,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     reviewersWithCounts,
     groupsStats,
     date,
+    workReport,
   };
 };
 
@@ -262,9 +294,9 @@ function Report() {
     reviewersWithCounts,
     groupsStats,
     date,
+    workReport,
   } = useLoaderData();
 
-  console.log(usersWithCounts);
   return (
     <div className="max-w-fit mx-auto">
       <DatePickerWithRange className="flex justify-center" dateRange={date} />
@@ -314,6 +346,45 @@ function Report() {
             />
           ))}
         </div>
+      </div>
+      <h2 className="text-center border-b text-xl font-semibold tracking-tight uppercase">
+        Users Work Report
+      </h2>
+      <div className="rounded-lg border bg-slate-300 text-card-foreground shadow-md my-5">
+        <Table className="p-4">
+          <TableCaption>List of user stats</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[100px]">Username</TableHead>
+              <TableHead>Role</TableHead>
+              <TableHead>Syllabel Count</TableHead>
+              <TableHead className="text-right">Amount</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {workReport.map((report) => (
+              <TableRow key={report.id}>
+                <TableCell className="font-medium">{report.username}</TableCell>
+                <TableCell>{report.role}</TableCell>
+                <TableCell>{report.syllableCount}</TableCell>
+                <TableCell className="text-right">
+                  {calculatePay(report.syllableCount)}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+          <TableFooter>
+            <TableRow>
+              <TableCell colSpan={3}>Total</TableCell>
+              <TableCell className="text-right">
+                {workReport.reduce(
+                  (acc, report) => acc + calculatePay(report.syllableCount),
+                  0
+                )}
+              </TableCell>
+            </TableRow>
+          </TableFooter>
+        </Table>
       </div>
     </div>
   );
