@@ -75,7 +75,7 @@ export const getUsersWorkReport = async (user, fromDate, toDate) => {
     });
 
     const updatedReport = annotatedWorks.reduce((acc, work) => {
-      const syllables = splitIntoSyllables(work.annotated_prompt).length || 0;
+      const syllables = splitIntoSyllables(work.annotated_prompt)?.length || 0;
       acc.syllableCount += syllables;
       return acc;
     }, userWorkReport);
@@ -99,7 +99,7 @@ export const getUsersWorkReport = async (user, fromDate, toDate) => {
     });
 
     const updatedReport = reviewedWorks.reduce((acc, work) => {
-      const syllables = splitIntoSyllables(work.reviewed_prompt).length || 0;
+      const syllables = splitIntoSyllables(work.reviewed_prompt)?.length || 0;
       acc.syllableCount += syllables;
       return acc;
     }, userWorkReport);

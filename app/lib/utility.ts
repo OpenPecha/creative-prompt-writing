@@ -46,9 +46,9 @@ export function timeAgo(timestamp) {
 
 export const splitIntoSyllables = (text) => {
   // Split the text into syllables using regular expressions
-  const syllables = text.split(/[\\s་།]+/);
+  const syllables = text?.split(/[\\s་།]+/);
   // Filter out empty syllables
-  const filteredSplit = syllables.filter((s) => s !== "");
+  const filteredSplit = syllables?.filter((s) => s !== "");
   return filteredSplit;
 };
 

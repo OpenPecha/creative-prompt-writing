@@ -254,7 +254,7 @@ export const loader: LoaderFunction = async ({ request }) => {
     })
   );
 
-  //
+  // get all annotators and reviewers
   const appUsers = await db.user.findMany({
     where: {
       role: {
