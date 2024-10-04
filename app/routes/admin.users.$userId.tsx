@@ -165,44 +165,48 @@ function User() {
             </SelectContent>
           </Select>
         </div>
-        <div className="flex gap-2 items-center">
-          Group:
-          <Select onValueChange={handleGroupChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder={user.group?.name ?? "select group"} />
-            </SelectTrigger>
-            <SelectContent>
-              {groups?.map((group) => {
-                return (
-                  <SelectItem key={group.id} value={group.id}>
-                    {group.name}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex gap-2 items-center">
-          Reviewer :{" "}
-          <Select onValueChange={handleReviewerChange}>
-            <SelectTrigger className="w-[180px]">
-              <SelectValue
-                placeholder={
-                  user.reviewer_user?.username ?? "select one reviewer"
-                }
-              />
-            </SelectTrigger>
-            <SelectContent>
-              {reviewerList?.map((reviewer) => {
-                return (
-                  <SelectItem key={reviewer.id} value={reviewer.id}>
-                    {reviewer.username}
-                  </SelectItem>
-                );
-              })}
-            </SelectContent>
-          </Select>
-        </div>
+        {(user?.role === "ANNOTATOR" || user?.role === "REVIEWER") && (
+          <div className="flex gap-2 items-center">
+            Group:
+            <Select onValueChange={handleGroupChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue placeholder={user.group?.name ?? "select group"} />
+              </SelectTrigger>
+              <SelectContent>
+                {groups?.map((group) => {
+                  return (
+                    <SelectItem key={group.id} value={group.id}>
+                      {group.name}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        {user?.role === "ANNOTATOR" && (
+          <div className="flex gap-2 items-center">
+            Reviewer :{" "}
+            <Select onValueChange={handleReviewerChange}>
+              <SelectTrigger className="w-[180px]">
+                <SelectValue
+                  placeholder={
+                    user.reviewer_user?.username ?? "select one reviewer"
+                  }
+                />
+              </SelectTrigger>
+              <SelectContent>
+                {reviewerList?.map((reviewer) => {
+                  return (
+                    <SelectItem key={reviewer.id} value={reviewer.id}>
+                      {reviewer.username}
+                    </SelectItem>
+                  );
+                })}
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </CardContent>
     </Card>
   );
