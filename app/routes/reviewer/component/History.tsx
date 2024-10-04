@@ -18,11 +18,11 @@ import { timeAgo, truncateString } from "~/lib/utility";
 function History({ close }) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [param, setParams] = useSearchParams();
-  const { session } = useLoaderData();
+  const { session, user } = useLoaderData();
   const fetcher = useFetcher();
   useEffect(() => {
     if (isOpen) {
-      const url = "/api/history?session=" + session;
+      const url = "/api/history?session=" + session + "&" + "userId=" + user.id;
       fetcher.load(url);
     }
   }, [isOpen]);

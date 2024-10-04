@@ -1,9 +1,10 @@
 import { LoaderFunction } from "@remix-run/node";
 import { db } from "~/services/db.server";
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const url = new URL(request.url);
   const session = url.searchParams.get("session") as string;
+  const userId = url.searchParams.get("userId") as string;
   const user = await db.user.findFirst({
     where: { username: session },
     select: {
@@ -23,7 +24,10 @@ export const loader: LoaderFunction = async ({ request }) => {
         take: 20,
       },
       reviewed: {
-        where: { status: "REVIEWED" },
+        where: {
+          status: "REVIEWED",
+          ...(userId && { annotated_by_id: userId }),
+        },
         select: {
           id: true,
           write_up: true,
@@ -36,7 +40,6 @@ export const loader: LoaderFunction = async ({ request }) => {
       },
     },
   });
-  console.log("user history", user);
   if (user.role === "ANNOTATOR") {
     return user?.annotated;
   }

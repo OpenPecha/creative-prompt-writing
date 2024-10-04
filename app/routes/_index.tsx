@@ -48,6 +48,15 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (user?.role === "ANNOTATOR" && user.activate) {
     annotatedCount = await getAnnotatedCount(user?.id);
   }
+  if (user?.role === "USER") {
+    return {
+      user,
+      error: "Yet to assign to any role and task, contact admin.",
+    };
+  }
+  if (user?.role === "ANNOTATOR" && !user.activate) {
+    return { user, error: "You are not activated yet, contact admin." };
+  }
   if (!text) return { user, error: "No text found" };
   return { user, text, annotatedCount };
 };
@@ -55,7 +64,7 @@ export const loader: LoaderFunction = async ({ request }) => {
 export default function Index() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const { text, error } = useLoaderData();
+  const { text, error, user } = useLoaderData();
   return (
     <div className="p-3">
       <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />

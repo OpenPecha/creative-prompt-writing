@@ -15,7 +15,7 @@ export default function WorkStation({ text }) {
   const isActive = !promptText ? false : true;
 
   return (
-    <div className="max-w-8xl mx-auto bg-gray-50 md:p-4 rounded-md shadow-lg">
+    <div className="max-w-8xl mx-auto bg-gray-50 py-2 md:p-4 rounded-md shadow-lg">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Creative Write up Section */}
         <div className="space-y-2 md:h-[80vh]">
@@ -23,7 +23,7 @@ export default function WorkStation({ text }) {
             Creative Write up
           </h2>
           <div className="border border-gray-600 rounded p-4 overflow-y-auto h-96 md:h-3/4">
-            <p className="text-gray-700">
+            <p className="text-gray-700 text-lg">
               {/* Placeholder text */}
               {writeUp}
             </p>
@@ -36,10 +36,11 @@ export default function WorkStation({ text }) {
             Prompt
           </h2>
           <Textarea
-            className="w-full border border-gray-600 rounded-md p-4"
+            className="w-full border border-gray-600 rounded-md p-4 text-lg"
             value={promptText}
             rows={15}
             onChange={(e) => setPromptText(e.target.value)}
+            placeholder="Enter your prompt here"
           />
 
           {/* Control Buttons */}

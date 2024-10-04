@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "~/components/ui";
 
-type uploaddata = { batch: number; original_text: string; version: string };
+type uploaddata = { version: string; write_up: string };
 
 function UploadText() {
   const { groups } = useLoaderData();
