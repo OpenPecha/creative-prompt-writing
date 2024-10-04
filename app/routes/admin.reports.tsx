@@ -350,15 +350,15 @@ function Report() {
       <h2 className="text-center border-b text-xl font-semibold tracking-tight uppercase">
         Users Work Report
       </h2>
-      <div className="rounded-lg border bg-slate-300 text-card-foreground shadow-md my-5">
-        <Table className="p-4">
+      <div className="max-w-4xl mx-auto rounded-lg border bg-slate-300 text-card-foreground shadow-md my-5">
+        <Table className="w-full p-4">
           <TableCaption>List of user stats</TableCaption>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[100px]">Username</TableHead>
-              <TableHead>Role</TableHead>
-              <TableHead>Syllabel Count</TableHead>
-              <TableHead className="text-right">Amount</TableHead>
+              <TableHead className="w-auto">Username</TableHead>
+              <TableHead className="w-auto">Role</TableHead>
+              <TableHead className="w-auto">Syllabel Count</TableHead>
+              <TableHead className="w-auto text-right">Amount (Rs)</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
