@@ -10,7 +10,6 @@ function ControlButton({ promptText, text, reset, active }: any) {
         promptText,
         id: text.id,
         userId: user.id,
-        // prompt_text: prompt,
       },
       { action: "/api/text", method: "POST" }
     );

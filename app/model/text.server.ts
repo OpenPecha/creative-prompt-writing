@@ -7,11 +7,12 @@ export async function getText(id: string) {
   });
 }
 
-export const getUserText = async (userId: string) => {
+export const getUserText = async (userId: string, groupId: string) => {
   let text = await db.task.findFirst({
     where: {
       annotated_by_id: userId,
       status: "PENDING",
+      groupId: groupId,
     },
   });
   if (!text) {
@@ -20,6 +21,7 @@ export const getUserText = async (userId: string) => {
       where: {
         annotated_by_id: null,
         status: "PENDING",
+        groupId: groupId,
       },
     });
     if (!unassigned) {

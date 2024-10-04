@@ -31,6 +31,7 @@ export const loader: LoaderFunction = async ({ request }) => {
       error: "no session found",
     };
   const user = await createUserIfNotExists(session);
+  const groupId = user?.groupId;
   let text = null;
   let annotatedCount = 0;
   if (user?.role === "REVIEWER") {
@@ -42,8 +43,8 @@ export const loader: LoaderFunction = async ({ request }) => {
   if (history && user?.activate) {
     text = await getText(history);
   }
-  if (!history && user.activate && user?.role === "ANNOTATOR") {
-    text = await getUserText(user?.id);
+  if (!history && user.activate && user?.role === "ANNOTATOR" && groupId) {
+    text = await getUserText(user?.id, groupId);
   }
   if (user?.role === "ANNOTATOR" && user.activate) {
     annotatedCount = await getAnnotatedCount(user?.id);
@@ -52,6 +53,12 @@ export const loader: LoaderFunction = async ({ request }) => {
     return {
       user,
       error: "Yet to assign to any role and task, contact admin.",
+    };
+  }
+  if (user?.role === "ANNOTATOR" && user.activate && !groupId) {
+    return {
+      user,
+      error: "No group assigned, contact admin.",
     };
   }
   if (user?.role === "ANNOTATOR" && !user.activate) {
