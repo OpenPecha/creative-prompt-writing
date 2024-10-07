@@ -1,32 +1,12 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { Textarea } from "~/components/ui";
 import ControlButton from "./ControlButton";
-import { useFetcher, useLoaderData } from "@remix-run/react";
 
 function WorkStation({ text }) {
   const writeUp = text?.write_up;
   const [reviewedPrompt, setReviewedPrompt] = React.useState(
     text?.reviewed_prompt ? text?.reviewed_prompt : text?.annotated_prompt
   );
-
-  useEffect(() => {
-    // Add event listener for keyboard shortcuts
-    window.addEventListener("keydown", handleKeyPress);
-    // Remove the event listener when the component unmounts
-    return () => {
-      window.removeEventListener("keydown", handleKeyPress);
-    };
-  }, []);
-
-  function handleKeyPress(e) {
-    console.log(e);
-    if (e.altKey && e.keyCode === 65) {
-      const submitButton = document.getElementById("submit");
-      if (submitButton) {
-        submitButton.click();
-      }
-    }
-  }
 
   return (
     <div className="max-w-8xl mx-auto bg-gray-50 md:p-4 rounded-md shadow-lg">
